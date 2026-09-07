@@ -1,0 +1,66 @@
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { SearchIcon, X } from "lucide-react";
+import {
+  InputGroup,
+  InputGroupInput,
+  InputGroupAddon,
+} from "@/components/ui/input-group";
+
+type SearchOverlayProps = {
+  isOpen: boolean;
+  searchQuery: string;
+  onClose: () => void;
+  onSearchChange: (value: string) => void;
+};
+
+const SearchOverlay = ({
+  isOpen,
+  searchQuery,
+  onClose,
+  onSearchChange,
+}: SearchOverlayProps) => {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-20 bg-background/10 backdrop-blur-sm md:hidden"
+            onClick={onClose}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] md:hidden"
+          >
+            <div className="flex items-center gap-3">
+              <InputGroup className="flex-1 bg-[#434652]">
+                <InputGroupInput
+                  autoFocus
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => onSearchChange(e.target.value)}
+                />
+                <InputGroupAddon align="inline-start">
+                  <SearchIcon />
+                </InputGroupAddon>
+              </InputGroup>
+              <Button variant="ghost" size="icon" onClick={onClose}>
+                <X className="size-5" />
+              </Button>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default SearchOverlay;
