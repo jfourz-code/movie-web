@@ -1,6 +1,12 @@
 import Navbar from "./Navbar";
 import { Badge } from "@/components/ui/badge";
 import { StarIcon, Play, Bookmark } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import { Card, CardTitle } from "@/components/ui/card";
 
 const Content = () => {
   return (
@@ -140,7 +146,43 @@ const Content = () => {
       {/* section hero end */}
 
       {/* section carousel film start */}
-      <section></section>
+      <section className="w-full flex justify-center items-center">
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-8xl mx-auto"
+        >
+          <CarouselContent className="-ml-1">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <CarouselItem
+                key={index}
+                className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
+              >
+                <div className="p-1">
+                  <Card className="overflow-hidden p-0">
+                    <CardTitle className="absolute flex gap-2 ml-3 mt-3">
+                      <Badge className="text-yellow-500">
+                        <StarIcon /> 8.6
+                      </Badge>
+                    </CardTitle>
+                    <img
+                      src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg"
+                      alt=""
+                      className="rounded-none"
+                    />
+                  </Card>
+                  <div id="title-film" className="ml-3 text-md mt-3">
+                    <h1 className="font-bold">Fast X</h1>
+                    <p className="font-extralight">2023</p>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </section>
       {/* section carousel film end */}
     </div>
   );
