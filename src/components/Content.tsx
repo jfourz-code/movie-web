@@ -7,15 +7,16 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Card, CardTitle } from "@/components/ui/card";
+import { useFetchApi } from "@/api/useFetchApi";
 
 const Content = () => {
+  const { movies } = useFetchApi();
+
   return (
     <div className="relative h-screen">
       {/* navbar */}
       <Navbar />
-
       {/* content */}
-
       {/* section hero start */}
       <section
         id="hero"
@@ -144,7 +145,6 @@ const Content = () => {
         </div>
       </section>
       {/* section hero end */}
-
       {/* section carousel film start */}
       <section className="w-full flex justify-center items-center">
         <Carousel
@@ -155,9 +155,9 @@ const Content = () => {
           className="w-full max-w-8xl mx-auto"
         >
           <CarouselContent className="-ml-1">
-            {Array.from({ length: 10 }).map((_, index) => (
+            {movies.map((data) => (
               <CarouselItem
-                key={index}
+                key={data.id}
                 className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
               >
                 <div className="p-1">
@@ -168,14 +168,14 @@ const Content = () => {
                       </Badge>
                     </CardTitle>
                     <img
-                      src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg"
+                      src={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
                       alt=""
-                      className="rounded-none"
+                      className="rounded-none aspect-3/4 object-cover"
                     />
                   </Card>
                   <div id="title-film" className="ml-3 text-md mt-3">
-                    <h1 className="font-bold">Fast X</h1>
-                    <p className="font-extralight">2023</p>
+                    <h1 className="font-bold">{data.title}</h1>
+                    <p className="font-extralight">{data.release_date}</p>
                   </div>
                 </div>
               </CarouselItem>
