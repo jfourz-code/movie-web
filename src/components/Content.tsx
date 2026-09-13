@@ -10,7 +10,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { useFetchApi } from "@/api/useFetchApi";
 
 const Content = () => {
-  const { movies } = useFetchApi();
+  const { movies, heroSection } = useFetchApi();
 
   return (
     <div className="relative h-screen">
@@ -23,7 +23,7 @@ const Content = () => {
         className="relative w-full h-112.5 md:h-167.5 overflow-hidden"
       >
         <img
-          src="https://image.tmdb.org/t/p/original/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg"
+          src={`https://image.tmdb.org/t/p/original${heroSection?.backdrop_path}`}
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -37,44 +37,28 @@ const Content = () => {
         {/* star and data film */}
         <div className="absolute flex flex-col gap-3 top-65 md:top-48 left-5 md:left-8">
           <div id="star-and-date-film" className="flex gap-3 items-center">
-            {/* 4k Dolby badge for mobile start */}
-            <Badge
-              className="md:hidden bg-hover/45 text-blue-500 rounded-md pt-4 pb-4 pl-2 pr-2 text-bold"
-              variant="secondary"
-            >
-              4K DOLBY
-            </Badge>
-            {/* 4k Dolby badge for mobile end */}
-
-            {/* 4k Dolby badge for desktop start */}
-            <Badge
-              className="hidden md:flex  bg-hover/45 text-blue-500 rounded-md pt-4 pb-4 pl-2 pr-2 text-bold"
-              variant="secondary"
-            >
-              4K ULTRA HD | DOLBY ATMOS
-            </Badge>
-            {/* 4k Dolby badge for desktop end */}
-
             {/* star for mobile start */}
             <h1
               id="star"
               className="md:hidden flex gap-1 items-center text-yellow-500"
             >
-              <StarIcon className="size-5" /> 8.6
+              <StarIcon className="size-5" />{" "}
+              {heroSection?.vote_average.toFixed(1)}
             </h1>
             {/* star for mobile end */}
 
             {/* star for mobile start */}
             <h1 id="datefilm" className="md:hidden text-sm">
-              2024 | PG-13
+              {heroSection?.release_date} | PG-13
             </h1>
           </div>
           {/* star for mobile end */}
 
           {/* title film for mobile and dekstop start */}
           <div id="title-film">
-            <h1 className="text-2xl md:text-4xl font-black">DUNE: PART TWO</h1>
-            <p className="hidden md:inline">LONG LIVE THE FIGHTERS</p>
+            <h1 className="text-2xl md:text-4xl font-black">
+              {heroSection?.title}
+            </h1>
           </div>
           {/* title film for mobile and dekstop end */}
 
@@ -82,13 +66,14 @@ const Content = () => {
           <div className="hidden md:flex items-center gap-2">
             {/* badge star */}
             <Badge className="bg-background/95 font-black">
-              <StarIcon className="text-yellow-500" /> 8.6{" "}
+              <StarIcon className="text-yellow-500" />{" "}
+              {heroSection?.vote_average.toFixed(1)}{" "}
               <span className="font-medium text-hover/90">/10</span>
             </Badge>
 
             {/* badge year */}
             <Badge className="bg-background/95 font-bold rounded-sm">
-              2024
+              {heroSection?.release_date}
             </Badge>
 
             {/* badge pg */}
@@ -106,10 +91,7 @@ const Content = () => {
           {/* description film */}
           <div id="description-film">
             <p className="line-clamp-1 md:line-clamp-3 leading-relaxed text-sm font-light max-w-xl  md:max-w-2xl">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
-              veritatis praesentium itaque reiciendis quo tenetur impedit sequi,
-              hic repellendus ab quos perferendis beatae neque ea, rerum
-              quibusdam cum. Odit, possimus.
+              {heroSection?.overview}
             </p>
           </div>
 
@@ -164,18 +146,20 @@ const Content = () => {
                   <Card className="overflow-hidden p-0">
                     <CardTitle className="absolute flex gap-2 ml-3 mt-3">
                       <Badge className="text-yellow-500">
-                        <StarIcon /> 8.6
+                        <StarIcon /> {data.vote_average.toFixed(1)}
                       </Badge>
                     </CardTitle>
                     <img
-                      src={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
+                      src={`https://image.tmdb.org/t/p/original/${data.poster_path}`}
                       alt=""
-                      className="rounded-none aspect-3/4 object-cover"
+                      className="rounded-none! aspect-3/5 object-cover"
                     />
                   </Card>
                   <div id="title-film" className="ml-3 text-md mt-3">
                     <h1 className="font-bold">{data.title}</h1>
-                    <p className="font-extralight">{data.release_date}</p>
+                    <p className="font-extralight text-sm">
+                      {data.release_date}
+                    </p>
                   </div>
                 </div>
               </CarouselItem>

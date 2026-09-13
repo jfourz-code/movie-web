@@ -1,34 +1,44 @@
+import { axiosInstance } from "@/lib/axios";
 import { useState, useEffect } from "react";
 
-export const useFetchApi = () => {
-  const [movies, setMovies] = useState<any[]>([]);
+import type { moviesResponse } from "@/types/movieResponse";
+import type { heroSectionResponse } from "@/types/heroSectionResponse";
 
-  const apiReadTokken = import.meta.env.VITE_API_TMDB_KEY;
+export const useFetchApi = () => {
+  const [movies, setMovies] = useState<moviesResponse[]>([]);
+  const [heroSection, setHeroSection] = useState<heroSectionResponse>();
 
   useEffect(() => {
     const fetchApi = async () => {
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${apiReadTokken}`,
-        },
-      };
+      const response = await axiosInstance.get("/discover/movie");
 
-      const response = await fetch(
-        "https://api.themoviedb.org/3/discover/movie",
-        options,
-      );
+      console.log(response);
 
-      const data = await response.json();
-
-      setMovies(data.results);
+      setMovies(response.data.results);
     };
 
     fetchApi();
   }, []);
 
+  useEffect(() => {
+    const recomendations = async () => {
+      const response = await axiosInstance.get("/trending/movie/week");
+
+      const data = response.data;
+
+      console.log(data);
+
+      const hero = Math.floor(Math.random() * data.results.length);
+
+      const selected = data.results[hero];
+
+      setHeroSection(selected);
+    };
+    recomendations();
+  }, []);
+
   return {
     movies,
+    heroSection,
   };
 };
