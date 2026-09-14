@@ -1,44 +1,74 @@
 import { axiosInstance } from "@/lib/axios";
 import { useState, useEffect } from "react";
 
-import type { moviesResponse } from "@/types/movieResponse";
-import type { heroSectionResponse } from "@/types/heroSectionResponse";
+import type { TrendingResponse } from "@/types/TrendingResponse";
+import type { HeroSectionResponse } from "@/types/heroSectionResponse";
+import type { Genres } from "@/types/genres";
 
 export const useFetchApi = () => {
-  const [movies, setMovies] = useState<moviesResponse[]>([]);
-  const [heroSection, setHeroSection] = useState<heroSectionResponse>();
+  const [movies, setMovies] = useState<TrendingResponse[]>([]);
+  const [heroSection, setHeroSection] = useState<HeroSectionResponse>();
+  const [genre, setGenre] = useState<Genres[]>([]);
+  const [trendingMoviesToday, setTrendingMoviesToday] = useState<
+    TrendingResponse[]
+  >([]);
+  const [trendingTvToday, setTrendingTvToday] = useState<TrendingResponse[]>(
+    [],
+  );
 
+  // fetch api movie discover
   useEffect(() => {
     const fetchApi = async () => {
       const response = await axiosInstance.get("/discover/movie");
-
-      console.log(response);
-
       setMovies(response.data.results);
     };
-
     fetchApi();
   }, []);
 
+  // fetch api trending movie for hero section
   useEffect(() => {
     const recomendations = async () => {
       const response = await axiosInstance.get("/trending/movie/week");
-
       const data = response.data;
-
-      console.log(data);
-
       const hero = Math.floor(Math.random() * data.results.length);
-
       const selected = data.results[hero];
-
       setHeroSection(selected);
     };
     recomendations();
   }, []);
 
+  // fetch api for genre
+  useEffect(() => {
+    const genres = async () => {
+      const response = await axiosInstance.get("/genre/movie/list");
+      setGenre(response.data.genres);
+    };
+    genres();
+  }, []);
+
+  // fetch api for trending movie today
+  useEffect(() => {
+    const trendingMovieToday = async () => {
+      const response = await axiosInstance.get("/trending/movie/day");
+      setTrendingMoviesToday(response.data.results);
+    };
+    trendingMovieToday();
+  }, []);
+
+  // fetch api for trending tv today
+  useEffect(() => {
+    const trendingTvday = async () => {
+      const response = await axiosInstance.get("/trending/tv/day");
+      setTrendingTvToday(response.data.results);
+    };
+    trendingTvday();
+  }, []);
+
   return {
     movies,
     heroSection,
+    genre,
+    trendingMoviesToday,
+    trendingTvToday,
   };
 };

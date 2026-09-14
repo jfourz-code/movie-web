@@ -5,18 +5,28 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
 } from "@/components/ui/carousel";
 import { Card, CardTitle } from "@/components/ui/card";
 import { useFetchApi } from "@/api/useFetchApi";
 
 const Content = () => {
-  const { movies, heroSection } = useFetchApi();
+  const { heroSection, genre, trendingMoviesToday, trendingTvToday } =
+    useFetchApi();
+
+  // for found name genre
+  const genresId = heroSection?.genre_ids.map((id) => {
+    const found = genre.find((item) => item.id === id);
+    return found?.name;
+  });
 
   return (
     <div className="relative h-screen">
       {/* navbar */}
       <Navbar />
       {/* content */}
+
       {/* section hero start */}
       <section
         id="hero"
@@ -35,7 +45,7 @@ const Content = () => {
         ></div>
 
         {/* star and data film */}
-        <div className="absolute flex flex-col gap-3 top-65 md:top-48 left-5 md:left-8">
+        <div className="absolute flex flex-col gap-3 top-65 md:top-60 left-5 md:left-8">
           <div id="star-and-date-film" className="flex gap-3 items-center">
             {/* star for mobile start */}
             <h1
@@ -49,14 +59,14 @@ const Content = () => {
 
             {/* star for mobile start */}
             <h1 id="datefilm" className="md:hidden text-sm">
-              {heroSection?.release_date} | PG-13
+              {heroSection?.release_date}
             </h1>
           </div>
           {/* star for mobile end */}
 
           {/* title film for mobile and dekstop start */}
           <div id="title-film">
-            <h1 className="text-2xl md:text-4xl font-black">
+            <h1 className="text-2xl md:text-5xl font-black">
               {heroSection?.title}
             </h1>
           </div>
@@ -76,15 +86,16 @@ const Content = () => {
               {heroSection?.release_date}
             </Badge>
 
-            {/* badge pg */}
-            <Badge className="bg-background/95 font-bold rounded-sm">
-              PG-13
-            </Badge>
-
-            <h1 id="duration" className="text-sm">
-              2h 46m |<span className="text-blue-200"> Sci-Fi</span> |
-              <span className="text-blue-200"> Adventure</span>
-            </h1>
+            <div id="genre" className="flex gap-1">
+              <h1 className="text-sm text-blue-200">
+                {" "}
+                {genresId ? `${genresId[0]} |` : ""}{" "}
+              </h1>
+              <h1 className="text-sm text-blue-200">
+                {" "}
+                {genresId ? `${genresId[1]} ` : ""}{" "}
+              </h1>
+            </div>
           </div>
           {/* star for dekstop end */}
 
@@ -106,68 +117,117 @@ const Content = () => {
               List
             </Badge>
           </div>
-
-          {/* little information for dekstop */}
-          <div className="hidden md:flex gap-2 items-center text-sm">
-            <div id="director">
-              <p className="text-sm text-hover/90">
-                Director: <span className="text-white">Denis Villenueve</span>
-              </p>
-            </div>
-            <p className="text-hover/90">|</p>
-            <div id="staring" className="text-sm text-hover/90">
-              <p>
-                Starring:{" "}
-                <span className="text-white">
-                  Timothe Chalemet, Zendaya, Rebecca
-                </span>
-              </p>
-            </div>
-          </div>
         </div>
       </section>
       {/* section hero end */}
-      {/* section carousel film start */}
-      <section className="w-full flex justify-center items-center">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full max-w-8xl mx-auto"
-        >
-          <CarouselContent className="-ml-1">
-            {movies.map((data) => (
-              <CarouselItem
-                key={data.id}
-                className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
-              >
-                <div className="p-1">
-                  <Card className="overflow-hidden p-0">
-                    <CardTitle className="absolute flex gap-2 ml-3 mt-3">
-                      <Badge className="text-yellow-500">
-                        <StarIcon /> {data.vote_average.toFixed(1)}
-                      </Badge>
-                    </CardTitle>
-                    <img
-                      src={`https://image.tmdb.org/t/p/original/${data.poster_path}`}
-                      alt=""
-                      className="rounded-none! aspect-3/5 object-cover"
-                    />
-                  </Card>
-                  <div id="title-film" className="ml-3 text-md mt-3">
-                    <h1 className="font-bold">{data.title}</h1>
-                    <p className="font-extralight text-sm">
-                      {data.release_date}
-                    </p>
+
+      {/* section carousel movie start (trending today) */}
+      <section className="flex flex-col gap-4 p-6 justify-center items-center">
+        <h1 className="w-full text-xl md:text-3xl  ml-3 font-bold">
+          {" "}
+          <span className="text-blue-200">|</span> Trending Movie Today
+        </h1>
+        <div className="w-full flex justify-center items-center">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: false,
+            }}
+            className="w-full max-w-8xl mx-auto"
+          >
+            <CarouselContent className="-ml-1">
+              {trendingMoviesToday.map((data) => (
+                <CarouselItem
+                  key={data.id}
+                  className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
+                >
+                  <div className="p-1">
+                    <Card className="overflow-hidden p-0">
+                      <CardTitle className="absolute flex gap-2 ml-3 mt-3">
+                        <Badge className="text-yellow-500">
+                          <StarIcon /> {data.vote_average.toFixed(1)}
+                        </Badge>
+                      </CardTitle>
+                      <img
+                        src={`https://image.tmdb.org/t/p/original/${data.poster_path}`}
+                        alt=""
+                        className="rounded-none! aspect-4/6 object-cover"
+                      />
+                    </Card>
+                    <div id="title-film" className="ml-3 text-md mt-3">
+                      <h1 className="font-bold">{data.title}</h1>
+                      <p className="font-extralight text-sm">
+                        {data.release_date.substring(0, 4)}
+                        <span className="capitalize">
+                          {" "}
+                          · {data.media_type}
+                        </span>{" "}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselNext className="right-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
+            <CarouselPrevious className="left-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+          </Carousel>
+        </div>
       </section>
-      {/* section carousel film end */}
+      {/* section carousel movie end (trending today) */}
+
+      {/* section carousel tv start (trending today) */}
+      <section className="flex flex-col gap-4 p-6 justify-center items-center">
+        <h1 className="w-full text-xl md:text-3xl  ml-3 font-bold">
+          {" "}
+          <span className="text-blue-200">|</span> Trending Tv Today
+        </h1>
+        <div className="w-full flex justify-center items-center">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: false,
+            }}
+            className="w-full max-w-8xl mx-auto"
+          >
+            <CarouselContent className="-ml-1">
+              {trendingTvToday.map((data) => (
+                <CarouselItem
+                  key={data.id}
+                  className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
+                >
+                  <div className="p-1">
+                    <Card className="overflow-hidden p-0">
+                      <CardTitle className="absolute flex gap-2 ml-3 mt-3">
+                        <Badge className="text-yellow-500">
+                          <StarIcon /> {data.vote_average.toFixed(1)}
+                        </Badge>
+                      </CardTitle>
+                      <img
+                        src={`https://image.tmdb.org/t/p/original/${data.poster_path}`}
+                        alt=""
+                        className="rounded-none! aspect-4/6 object-cover"
+                      />
+                    </Card>
+                    <div id="title-film" className="ml-3 text-md mt-3">
+                      <h1 className="font-bold">{data.name}</h1>
+                      <p className="font-extralight text-sm">
+                        {data.first_air_date.substring(0, 4)}
+                        <span className="capitalize">
+                          {" "}
+                          · {data.media_type}
+                        </span>{" "}
+                      </p>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselNext className="right-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
+            <CarouselPrevious className="left-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+          </Carousel>
+        </div>
+      </section>
+      {/* section carousel tv end (trending today) */}
     </div>
   );
 };

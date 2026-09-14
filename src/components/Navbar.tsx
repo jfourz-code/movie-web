@@ -20,7 +20,6 @@ import {
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
