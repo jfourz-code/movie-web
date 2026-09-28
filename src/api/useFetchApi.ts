@@ -2,8 +2,8 @@ import { axiosInstance } from "@/lib/axios";
 import { useState, useEffect } from "react";
 
 import type { TrendingResponse } from "@/types/TrendingResponse";
-import type { HeroSectionResponse } from "@/types/heroSectionResponse";
-import type { Genres } from "@/types/genres";
+import type { HeroSectionResponse } from "@/types/HeroSectionResponse";
+import type { Genres } from "@/types/Genres";
 
 export const useFetchApi = () => {
   const [movies, setMovies] = useState<TrendingResponse[]>([]);

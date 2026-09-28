@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardTitle } from "@/components/ui/card";
 import { useFetchApi } from "@/api/useFetchApi";
+import { Link } from "react-router";
+
 
 const Content = () => {
   const { heroSection, genre, trendingMoviesToday, trendingTvToday } =
@@ -141,7 +143,8 @@ const Content = () => {
                   key={data.id}
                   className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
                 >
-                  <div className="p-1">
+                  <Link to={`/discover/${data.media_type}/${data.id}`}>
+                    <div className="p-1">
                     <Card className="overflow-hidden p-0">
                       <CardTitle className="absolute flex gap-2 ml-3 mt-3">
                         <Badge className="text-yellow-500">
@@ -165,6 +168,8 @@ const Content = () => {
                       </p>
                     </div>
                   </div>
+                  </Link>
+                  
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -195,6 +200,7 @@ const Content = () => {
                   key={data.id}
                   className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
                 >
+                  <Link to={`/discover/${data.media_type}/${data.id}`}>
                   <div className="p-1">
                     <Card className="overflow-hidden p-0">
                       <CardTitle className="absolute flex gap-2 ml-3 mt-3">
@@ -219,6 +225,7 @@ const Content = () => {
                       </p>
                     </div>
                   </div>
+                  </Link>
                 </CarouselItem>
               ))}
             </CarouselContent>
