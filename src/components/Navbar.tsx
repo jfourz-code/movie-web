@@ -41,7 +41,7 @@ const Navbar = () => {
             <SearchIcon className="size-5" />
           </Button>
 
-          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+          {/* <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger render={<Button variant="ghost" size="icon" />}>
               <Menu className="size-5" />
             </SheetTrigger>
@@ -81,7 +81,7 @@ const Navbar = () => {
                 </NavLink>
               </nav>
             </SheetContent>
-          </Sheet>
+          </Sheet> */}
         </div>
       </nav>
 
@@ -104,7 +104,7 @@ const Navbar = () => {
           </h1>
         </div>
 
-        <div id="navlink" className="flex gap-5 cursor-pointer">
+        {/* <div id="navlink" className="flex gap-5 cursor-pointer">
           <NavLink
             to="/discover"
             className={({ isActive }) =>
@@ -135,7 +135,7 @@ const Navbar = () => {
           >
             WatchList
           </NavLink>
-        </div>
+        </div> */}
         <div id="search">
           <InputGroup className="bg-[#434652]">
             <InputGroupInput

@@ -1,60 +1,19 @@
 import Navbar from "@/components/Navbar";
-import { axiosInstance } from "@/lib/axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { StarIcon, Eye, MoveLeft } from "lucide-react";
 import { Link } from "react-router";
 import type { Genres } from "@/types/Genres";
 import type { Actor } from "@/types/Actor";
-import type { FetchDetail } from "@/types/FetchDetail";
-import type { CreditDetail } from "@/types/CreditDetails";
+import type { Production } from "@/types/Production";
+import { useDetailFilm } from "@/hooks/useFetchDetail";
 
 
 const DetailFilm = () => {
 
-  // filmDetail
-  const [fetchDetail, setFetchDetail] = useState<FetchDetail>();
-  const [creditFetch, setCreditFetch] = useState<CreditDetail>(null);
-
   // get id with useParams
-  let params = useParams();
-
-  // fetch data filmDetail
-  useEffect(() => {
-    if (params.media_type === "movie") {
-      const movieDetail = async () => {
-        const response = await axiosInstance.get(`/movie/${params.id}`);
-        setFetchDetail(response.data);
-      }
-      movieDetail();
-    } else if (params.media_type === "tv") {
-      const tv = async () => {
-        const response = await axiosInstance.get(`/tv/${params.id}`);
-        setFetchDetail(response.data);
-      }
-      tv()
-    }
-  }, [params.media_type, params.id])
-
-
-  // fetch credit
-  useEffect(() => {
-    if (params.media_type === "movie") {
-      const creditMovie = async () => {
-      const response = await axiosInstance.get(`movie/${params.id}/credits`);
-      setCreditFetch(response.data);
-    }
-    creditMovie();
-    } else if (params.media_type === "tv") {
-      const creditTv = async () => {
-      const response = await axiosInstance.get(`tv/${params.id}/credits`);
-      setCreditFetch(response.data);
-      }
-    creditTv();
-    }
-  }, [params.id])
-
+  const { media_type, id } = useParams();
+  const { fetchDetail, creditFetch } = useDetailFilm(media_type, id);
 
   // guard, if the data null show 'Loading..'
   if (!fetchDetail || !creditFetch) {
@@ -68,18 +27,16 @@ const DetailFilm = () => {
     )
   }
 
-
-
+  
   // duration films start
   const hours = Math.floor(fetchDetail.runtime / 60);
   const minute = fetchDetail.runtime % 60;
   // duration film end
-  
-  
 
-  return <div>
+  return ( 
+    <div>
   {/* navbar start */}
-  < Navbar />
+    < Navbar />
   {/* navbar end */}
 
 
@@ -102,40 +59,40 @@ const DetailFilm = () => {
 
 
     {/* poster path */}
-    <div id="poster" className="absolute flex flex-col gap-10 items-center justify-center w-full h-full md:justify-start md:items-start md:m-20 lg:m-30"> 
-      <img src={`https://image.tmdb.org/t/p/original/${fetchDetail.poster_path}`}  alt="" className="w-50 md:w-60 lg:w-65 xl:w-70 object-cover shadow-xl"/>
+    <div id="poster" className="absolute flex flex-col gap-10 items-center justify-center w-full h-full md:justify-center md:items-center lg:justify-center lg:items-center"> 
+      <img src={`https://image.tmdb.org/t/p/original/${fetchDetail.poster_path}`}  alt="" className="w-50 md:w-75 lg:w-85 xl:w-95 object-cover shadow-xl"/>
     </div>
     {/* poster path */}
   </section>
   {/* hero section end */}
 
 
-  {/* section mobile start */}
-  <section className="flex flex-col gap-6 w-full">
+  {/* section mobile & desktop start */}
+  <section className="flex flex-col gap-6 md:gap-8 w-full">
     <div id="title" className="flex items-center justify-center">
-      <h1 className="sm:text-2xl md:text-4xl font-black">{fetchDetail.original_title || fetchDetail.name}</h1>
+      <h1 className="text-3xl md:text-4xl lg:text-4xl font-black">{fetchDetail.original_title || fetchDetail.name}</h1>
     </div>
     
     {/* rating start */}
     <div id="rating" className="flex justify-center items-center px-3">
-      <div className="flex justify-center items-center gap-6 p-5 bg-gray-800 w-full max-w-xl rounded-2xl">
+      <div className="flex justify-center items-center gap-6 md:justify-evenly lg:justify-evenly p-5 bg-gray-800 w-full max-w-xl rounded-2xl">
       
-        <Badge className="bg-yellow-500 text-sm p-3">
+        <Badge className="bg-yellow-500 text-sm md:text-xl lg:text-xl p-3">
           <StarIcon className="size-2" />
           {fetchDetail.vote_average.toFixed(1)} <span>/10</span>
         </Badge>
 
         <span>|</span>
 
-        <div className="flex items-center gap-2 text-md font-medium">
-          <Eye size={20} />
+        <div className="flex items-center gap-2 text-md md:text-xl lg:text-xl font-medium">
+          <Eye className="size-5 md:size-7 lg:size-7" />
           {fetchDetail.popularity.toFixed(3)}
         </div>
 
         <span>|</span>
 
         <div>
-          {params.media_type === "movie"? <h1 className="text-md font-medium">{hours}h{minute}m</h1> : <h1 className="text-md font-medium">{fetchDetail.number_of_episodes} Episode</h1>}
+          {media_type === "movie"? <h1 className="text-md md:text-xl lg:text-xl font-medium">{hours}h{minute}m</h1> : <h1 className="text-md md:text-xl lg:text-xl  font-medium">{fetchDetail.number_of_episodes} Episode</h1>}
         </div>
       </div>
     </div>
@@ -144,38 +101,42 @@ const DetailFilm = () => {
     {/* overview start */}
     <div id="overview" className="flex justify-center items-center px-5">
         <div className="flex flex-col gap-4 w-full w-max-xl">
-          <h1 className="text-xl font-semibold"> <span className="text-2xl text-blue-500" >|</span> Overview</h1>
-          <p  className="text-md font-normal">{fetchDetail.overview}</p>
+          <h1 className="text-xl md:text-2xl lg:text-2xl font-semibold"> <span className="text-2xl text-blue-500" >|</span> Overview</h1>
+          <p  className="text-md md:text-lg lg:text-lg font-normal">{fetchDetail.overview}</p>
         </div>
     </div>
+    {/* overview end */}
 
+    {/* genre start */}
     <div id="genre" className="flex justify-center items-center px-5">
       <div className="flex flex-col gap-4 w-full w-max-xl">
-        <h1 className="text-xl font-semibold"> <span className="text-2xl text-blue-500">|</span> Genre </h1>
+        <h1 className="text-xl md:text-2xl lg:text-2xl font-semibold"> <span className="text-2xl text-blue-500">|</span> Genre </h1>
         
         <div className="grid grid-cols-1 gap-2">
           {fetchDetail.genres.map((data: Genres) => (
-          <Badge className="text-sm p-3 bg-blue-700" key={data.id} >{data.name}</Badge>
+          <Badge className="text-sm md:text-md lg:text-md p-3 bg-blue-700" key={data.id} >{data.name}</Badge>
         ))}
         </div>
       </div>
     </div>
-    {/* overview end */}
+    {/* genre end */}
 
     {/* actor start */}
-    <div id="actor" className="flex justify-center items-center px-5">
-      <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full">
-        <h1 className="text-xl font-semibold"> <span className="text-2xl text-blue-500" > | </span> Actors</h1>
+    <div id="actor" className="flex px-5">
+      <div className="flex flex-col gap-4 w-full">
+        <h1 className="text-xl md:text-2xl lg:text-2xl font-semibold"> <span className="text-2xl text-blue-500" > | </span> Actors</h1>
 
-        {creditFetch.cast.slice(0,10).map((actor: Actor) => (
-          <div  key={actor.id} className="flex items-center gap-6 w-full rounded-2xl bg-gray-900 p-4">
-            <img src="https://github.com/shadcn.png" alt="" className="rounded-full size-16 object-cover"/>
-            <div id="name-actor" className="flex flex-col">
-              <h1 className="text-md font-semibold">{actor.name}</h1>
-              <h3 className="text-sm font-normal">{actor.known_for_department}</h3>
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
+            {creditFetch.cast.slice(0,10).map((actor: Actor) => (
+              <div  key={actor.id} className="flex items-center gap-6 w-full rounded-2xl bg-gray-900 p-4">
+                <img src="https://github.com/shadcn.png" alt="" className="rounded-full size-16 md:size-17 lg:size-17 object-cover"/>
+                <div id="name-actor" className="flex flex-col">
+                  <h1 className="text-md md:text-lg lg:text-lg font-semibold">{actor.name}</h1>
+                  <h3 className="text-sm md:text-md lg:text-md font-normal">{actor.known_for_department}</h3>
+                </div>
             </div>
+          ))}
         </div>
-        ))}
       </div>
     </div>
     {/* actor end */}
@@ -183,18 +144,18 @@ const DetailFilm = () => {
     {/* production start */}
     <div id="production" className="flex justify-center items-center px-5">
         <div className="flex flex-col gap-4 w-full w-max-xl">
-          <h1 className="text-xl font-semibold"> <span className="text-2xl text-blue-500">|</span> Production</h1>
-          {fetchDetail.production_companies.map((production: any) => (
-            <Badge className="text-sm p-3 bg-blue-700" key={production.id}>{production.name} ({production.origin_country})</Badge>
+          <h1 className="text-xl md:text-2xl lg:text-2xl font-semibold"> <span className="text-2xl text-blue-500">|</span> Production</h1>
+          {fetchDetail.production_companies.map((production: Production) => (
+            <Badge className="text-sm md:text-md lg:text-md p-3 bg-blue-700" key={production.id}>{production.name} ({production.origin_country})</Badge>
           ))}
         </div>
     </div>
     {/* production end */}
   </section>
-  {/* section mobile end */}
+  {/* section mobile & desktop end */}
 
-
-  </div>;
+  </div>
+  );
 };
 
 export default DetailFilm;

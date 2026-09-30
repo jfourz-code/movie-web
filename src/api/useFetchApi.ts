@@ -7,7 +7,7 @@ import type { Genres } from "@/types/Genres";
 
 export const useFetchApi = () => {
   const [movies, setMovies] = useState<TrendingResponse[]>([]);
-  const [heroSection, setHeroSection] = useState<HeroSectionResponse>();
+  const [heroSection, setHeroSection] = useState<HeroSectionResponse | null>(null);
   const [genre, setGenre] = useState<Genres[]>([]);
   const [trendingMoviesToday, setTrendingMoviesToday] = useState<
     TrendingResponse[]
