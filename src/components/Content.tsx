@@ -34,7 +34,7 @@ const Content = () => {
         className="relative w-full h-112.5 md:h-167.5 overflow-hidden" 
       >
         <Skeleton
-          className="absolute inset-0 w-full h-full object-cover bg-gray-700 rounded-none"
+          className="absolute inset-0 w-full h-full object-cover bg-gray-800 rounded-none"
         />
 
         {/* star and data film */}
@@ -115,7 +115,7 @@ const Content = () => {
         className="relative w-full h-112.5 md:h-167.5 overflow-hidden"
       >
         <img
-          src={`https://image.tmdb.org/t/p/original${heroSection?.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/original${heroSection.backdrop_path}`}
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -135,13 +135,13 @@ const Content = () => {
               className="md:hidden flex gap-1 items-center text-yellow-500"
             >
               <StarIcon className="size-5" />{" "}
-              {heroSection?.vote_average.toFixed(1)}
+              {heroSection.vote_average.toFixed(1)}
             </h1>
             {/* star for mobile end */}
 
             {/* star for mobile start */}
             <h1 id="datefilm" className="md:hidden text-sm">
-              {heroSection?.release_date}
+              {heroSection.release_date}
             </h1>
           </div>
           {/* star for mobile end */}
@@ -149,7 +149,7 @@ const Content = () => {
           {/* title film for mobile and dekstop start */}
           <div id="title-film">
             <h1 className="text-2xl md:text-5xl font-black">
-              {heroSection?.title}
+              {heroSection.title}
             </h1>
           </div>
           {/* title film for mobile and dekstop end */}
@@ -159,13 +159,13 @@ const Content = () => {
             {/* badge star */}
             <Badge className="bg-background/95 font-black">
               <StarIcon className="text-yellow-500" />{" "}
-              {heroSection?.vote_average.toFixed(1)}{" "}
+              {heroSection.vote_average.toFixed(1)}{" "}
               <span className="font-medium text-hover/90">/10</span>
             </Badge>
 
             {/* badge year */}
             <Badge className="bg-background/95 font-bold rounded-sm">
-              {heroSection?.release_date}
+              {heroSection.release_date}
             </Badge>
 
             <div id="genre" className="flex gap-1">
@@ -184,13 +184,13 @@ const Content = () => {
           {/* description film */}
           <div id="description-film">
             <p className="line-clamp-1 md:line-clamp-3 leading-relaxed text-sm font-light max-w-xl  md:max-w-2xl">
-              {heroSection?.overview}
+              {heroSection.overview}
             </p>
           </div>
 
           {/* button watch and list */}
           <div id="button" className="flex gap-3 items-center">
-            <Link to={`/discover/${heroSection?.media_type}/${heroSection?.id}`}>
+            <Link to={`/discover/${heroSection.media_type}/${heroSection.id}`}>
               <Badge className="pt-4 pb-4 pl-3 pr-3 bg-blue-500 text-background rounded-md font-semibold">
                 <Info />
                 See More

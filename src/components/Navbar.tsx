@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import { Menu } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, Link } from "react-router";
 import {
   InputGroup,
   InputGroupInput,
@@ -9,19 +9,24 @@ import {
 } from "@/components/ui/input-group";
 import { useState } from "react";
 import SearchOverlay from "./SearchOverlay";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { useFetchQuery } from "@/hooks/useFetchQuery";
+import type { SearchingQuery } from "@/types/SearchingQuery";
+
+// import {
+//   Sheet,
+//   SheetContent,
+//   SheetHeader,
+//   SheetTitle,
+//   SheetTrigger,
+// } from "@/components/ui/sheet";
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
+  const { result } =  useFetchQuery(searchQuery);
+  
   return (
     <>
       {/* // mobile navbar */}
@@ -94,6 +99,7 @@ const Navbar = () => {
           setSearchQuery("");
         }}
         onSearchChange={setSearchQuery}
+        result={result}
       />
 
       {/* desktop navbar */}
@@ -136,16 +142,37 @@ const Navbar = () => {
             WatchList
           </NavLink>
         </div> */}
-        <div id="search">
-          <InputGroup className="bg-[#434652]">
+        <div id="search" className="flex flex-col gap-3">
+            <InputGroup className="bg-[#434652] relative">
             <InputGroupInput
               placeholder="Search..."
               className=""
+              autoComplete="off"
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+              }}
             ></InputGroupInput>
             <InputGroupAddon align="inline-start">
               <SearchIcon />
             </InputGroupAddon>
           </InputGroup>
+
+            {result.length !== 0 && 
+            <div className="absolute z-100 w-64 bg-gray-700 mt-16 rounded-sm shadow-2xl p-5 max-h-100 overflow-auto">
+              <div className="flex flex-col gap-5">
+                  {result.slice(0,10).map((result: SearchingQuery) => (
+                  <Link to={`/discover/${result.media_type}/${result.id}`}>
+                    <div className="flex gap-3 items-center"> 
+                    <img src={`https://image.tmdb.org/t/p/original/${result.poster_path}`} className="object-cover w-12"  alt="" />
+                    <div className="flex flex-col">
+                        <h1 className="font-medium">{result.original_name || result.original_title}</h1>
+                        <h3 className="text-sm font-light">{result.media_type}</h3>
+                    </div>
+                  </div>
+                  </Link>
+                ))}
+              </div>
+            </div>}
         </div>
       </nav>
     </>
