@@ -4,4 +4,5 @@ export type SearchingQuery = {
     original_title: string;
     poster_path: string;
     media_type: string;
+    backdrop_path: string;
 }

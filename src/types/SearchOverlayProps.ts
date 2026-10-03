@@ -6,4 +6,6 @@ export type SearchOverlayProps = {
     onClose: () => void;
     onSearchChange: (value: string) => void;
     result: SearchingQuery[];
+    isClose: () => void;
+    setSearchQuery: () => void;
 }

@@ -2,7 +2,7 @@ import { axiosInstance } from "@/lib/axios";
 import type { SearchingQuery } from "@/types/SearchingQuery";
 import { useEffect, useState } from "react"
 
-export const useFetchQuery = (query: string) => {
+export const useFetchQuery = (query: string | null) => {
     const [ result, setResult ] =  useState([]);
 
     useEffect(() => {
@@ -13,9 +13,9 @@ export const useFetchQuery = (query: string) => {
 
         const timer = setTimeout(async () => {
             const response = await axiosInstance.get(`/search/multi?query=${query}`);
-            const filtered = response.data.results.filter((data: SearchingQuery) => data.media_type !== "person");
+            const filtered = response.data.results.filter((data: SearchingQuery) => data.media_type !== "person" && data.poster_path !== null);
             setResult(filtered);
-        }, 100);
+        }, 200);
 
         return () => clearTimeout(timer);
 

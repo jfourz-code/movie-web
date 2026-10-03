@@ -44,17 +44,17 @@ const DetailFilm = () => {
   <section id="hero" className="relative w-full h-112.5 md:h-167.5 overflow-hidden">
 
     {/* image hero */}
-    <img src={`https://image.tmdb.org/t/p/original/${fetchDetail.backdrop_path}`} alt="" className="absolute inset-0 w-full h-full object-cover"/>
+    <img src={`https://image.tmdb.org/t/p/original/${fetchDetail.backdrop_path || fetchDetail.poster_path}`} alt="" className="absolute inset-0 w-full h-full object-cover"/>
 
     {/* gradient hero */}
     <div id="gradient" className="absolute inset-0 bg-linear-to-t from-background/98 to-transparent"></div>
 
     {/* button back start */}
-      <div className="absolute left-5 top-5 z-1 bg-gray-800 px-4 py-2 rounded-2xl">
+      {/* <div className="absolute left-5 top-5 z-1 bg-gray-800 px-4 py-2 rounded-2xl">
         <Link to={"/discover"}>
           <MoveLeft className=""/>
         </Link>
-      </div>
+      </div> */}
     {/* button back end */}
 
 

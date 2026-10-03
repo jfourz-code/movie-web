@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import { Menu } from "lucide-react";
-import { NavLink, Link } from "react-router";
+import { NavLink, Link, useNavigate} from "react-router";
 import {
   InputGroup,
   InputGroupInput,
   InputGroupAddon,
 } from "@/components/ui/input-group";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SearchOverlay from "./SearchOverlay";
 import { useFetchQuery } from "@/hooks/useFetchQuery";
 import type { SearchingQuery } from "@/types/SearchingQuery";
@@ -26,11 +26,15 @@ const Navbar = () => {
   // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const { result } =  useFetchQuery(searchQuery);
-  
+
+  const navigate = useNavigate();
+
+
+
   return (
     <>
       {/* // mobile navbar */}
-      <nav className="flex justify-between items-center p-5 bg-background shadow-md md:hidden">
+      <nav className="flex  justify-between items-center p-5 bg-background shadow-md md:hidden">
         <div id="title">
           <h1 className="text-lg font-bold">
             Cine<span className="text-click">Scope</span>
@@ -42,6 +46,7 @@ const Navbar = () => {
             size="icon"
             className="hover:bg-hover"
             onClick={() => setIsSearchOpen(true)}
+            
           >
             <SearchIcon className="size-5" />
           </Button>
@@ -100,6 +105,8 @@ const Navbar = () => {
         }}
         onSearchChange={setSearchQuery}
         result={result}
+        isClose={() => setIsSearchOpen(false)}
+        setSearchQuery={() => setSearchQuery("")}
       />
 
       {/* desktop navbar */}
@@ -145,11 +152,18 @@ const Navbar = () => {
         <div id="search" className="flex flex-col gap-3">
             <InputGroup className="bg-[#434652] relative">
             <InputGroupInput
+              value={searchQuery}
               placeholder="Search..."
               className=""
               autoComplete="off"
               onChange={(e) => {
                 setSearchQuery(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  navigate(`/search?query=${searchQuery}`)
+                  setSearchQuery("");
+                }
               }}
             ></InputGroupInput>
             <InputGroupAddon align="inline-start">

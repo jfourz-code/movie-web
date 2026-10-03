@@ -1,6 +1,7 @@
 import Content from "./components/Content";
 import { Routes, Route, Navigate } from "react-router";
 import DetailFilm from "./pages/DetailFilm";
+import ResultSearching from "./pages/ResultSearching";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
 
         {/* route detail films */}
         <Route  path="/discover/:media_type/:id" element={< DetailFilm /> }></Route>
+
+        {/* route search result user */}
+        <Route  path="/search" element={< ResultSearching />}></Route>
       </Routes>
     </>
   );

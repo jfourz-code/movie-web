@@ -7,7 +7,7 @@ import {
   InputGroupAddon,
 } from "@/components/ui/input-group";
 import type { SearchOverlayProps } from "@/types/SearchOverlayProps";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const SearchOverlay = ({
   isOpen,
@@ -15,7 +15,11 @@ const SearchOverlay = ({
   onClose,
   onSearchChange,
   result,
+  isClose,
+  setSearchQuery
 }: SearchOverlayProps) => {
+
+  const navigate = useNavigate();
 
   return (
     <AnimatePresence>
@@ -46,6 +50,13 @@ const SearchOverlay = ({
                     placeholder="Search..."
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        navigate(`/search?query=${searchQuery}`)
+                        isClose()
+                        setSearchQuery()
+                      }
+                    }}
                   />
                   <InputGroupAddon align="inline-start">
                     <SearchIcon />
@@ -56,7 +67,7 @@ const SearchOverlay = ({
                 </Button>
               </div>
 
-              {result.length != 0 && 
+              {result.length !== 0 && 
               <div className="flex flex-col gap-3 w-full p-4 bg-[#434652] max-h-70 overflow-y-auto rounded-md">
                   {result.slice(0, 10).map((result) => (
                   <Link to={`/discover/${result.media_type}/${result.id}`}>
