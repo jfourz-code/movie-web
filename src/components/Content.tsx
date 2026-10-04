@@ -23,7 +23,7 @@ const Content = () => {
     return found?.name;
   });
 
-
+  // guard content
   if (!heroSection) {
     return (
       <div>

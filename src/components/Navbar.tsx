@@ -7,7 +7,7 @@ import {
   InputGroupInput,
   InputGroupAddon,
 } from "@/components/ui/input-group";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import SearchOverlay from "./SearchOverlay";
 import { useFetchQuery } from "@/hooks/useFetchQuery";
 import type { SearchingQuery } from "@/types/SearchingQuery";
@@ -172,7 +172,7 @@ const Navbar = () => {
           </InputGroup>
 
             {result.length !== 0 && 
-            <div className="absolute z-100 w-64 bg-gray-700 mt-16 rounded-sm shadow-2xl p-5 max-h-100 overflow-auto">
+            <div className="absolute z-100 w-64 bg-gray-700 mt-16 rounded-sm shadow-2xl p-5 max-h-100 overflow-auto scrollbar-thin scrollbar-thumb-current scroll-smooth">
               <div className="flex flex-col gap-5">
                   {result.slice(0,10).map((result: SearchingQuery) => (
                   <Link to={`/discover/${result.media_type}/${result.id}`}>
@@ -180,7 +180,7 @@ const Navbar = () => {
                     <img src={`https://image.tmdb.org/t/p/original/${result.poster_path}`} className="object-cover w-12"  alt="" />
                     <div className="flex flex-col">
                         <h1 className="font-medium">{result.original_name || result.original_title}</h1>
-                        <h3 className="text-sm font-light">{result.media_type}</h3>
+                        <h3 className="text-sm font-light capitalize">{result.media_type}</h3>
                     </div>
                   </div>
                   </Link>

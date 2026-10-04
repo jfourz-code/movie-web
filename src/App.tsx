@@ -2,10 +2,13 @@ import Content from "./components/Content";
 import { Routes, Route, Navigate } from "react-router";
 import DetailFilm from "./pages/DetailFilm";
 import ResultSearching from "./pages/ResultSearching";
+import ScrollToTop from "./components/ScrollTop";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
     <>
+      < ScrollToTop />
       {/* routes */}
       <Routes>
         {/* route navigate from / to /discover */}
@@ -19,6 +22,9 @@ function App() {
 
         {/* route search result user */}
         <Route  path="/search" element={< ResultSearching />}></Route>
+
+        {/* not found page */}
+        <Route  path="/*" element={< NotFound />}></Route>
       </Routes>
     </>
   );

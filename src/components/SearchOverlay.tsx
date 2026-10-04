@@ -68,14 +68,14 @@ const SearchOverlay = ({
               </div>
 
               {result.length !== 0 && 
-              <div className="flex flex-col gap-3 w-full p-4 bg-[#434652] max-h-70 overflow-y-auto rounded-md">
+              <div className="flex flex-col gap-3 w-full p-4 bg-[#434652] max-h-70 overflow-y-auto rounded-md scrollbar-thin scroll-smooth">
                   {result.slice(0, 10).map((result) => (
                   <Link to={`/discover/${result.media_type}/${result.id}`}>
                       <div className="flex gap-3 items-center"> 
                         <img src={`https://image.tmdb.org/t/p/original/${result.poster_path}`} className="object-cover w-12 aspect-2/3"  alt="" />
                         <div className="flex flex-col">
                           <h1 className="font-medium">{result.original_name || result.original_title}</h1>
-                          <h3 className="text-sm font-light">{result.media_type}</h3>
+                          <h3 className="text-sm font-light capitalize">{result.media_type}</h3>
                         </div>
                     </div>
                   </Link>
