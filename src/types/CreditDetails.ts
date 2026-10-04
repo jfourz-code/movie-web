@@ -1,3 +1,3 @@
 export type CreditDetail = {
-    cast: []
+    cast: [];
 }

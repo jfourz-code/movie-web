@@ -25,7 +25,6 @@ const ResultSearching = () => {
             </div>
         )
 
-
     }
     return (
         <div>

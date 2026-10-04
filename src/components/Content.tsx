@@ -255,8 +255,8 @@ const Content = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselNext className="right-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
-            <CarouselPrevious className="left-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+            <CarouselNext className="right-0 -top-20 md:-top-15 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+            <CarouselPrevious className="left-0 -top-20 md:-top-15  bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
           </Carousel>
         </div>
       </section>
@@ -311,8 +311,8 @@ const Content = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselNext className="right-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
-            <CarouselPrevious className="left-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+            <CarouselNext className="right-0 -top-49 md:-top-30 bottom-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
+            <CarouselPrevious className="left-0 -top-49 md:-top-30 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
           </Carousel>
         </div>
       </section>

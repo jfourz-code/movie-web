@@ -32,6 +32,7 @@ const DetailFilm = () => {
   const hours = Math.floor(fetchDetail.runtime / 60);
   const minute = fetchDetail.runtime % 60;
   // duration film end
+  
 
   return ( 
     <div>
@@ -70,7 +71,7 @@ const DetailFilm = () => {
   {/* section mobile & desktop start */}
   <section className="flex flex-col gap-6 md:gap-8 w-full">
     <div id="title" className="flex items-center justify-center">
-      <h1 className="text-3xl md:text-4xl lg:text-4xl font-black">{fetchDetail.original_title || fetchDetail.name}</h1>
+      <h1 className="text-xl md:text-4xl lg:text-4xl font-black">{fetchDetail.original_title || fetchDetail.name}</h1>
     </div>
     
     {/* rating start */}
@@ -129,7 +130,7 @@ const DetailFilm = () => {
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
             {creditFetch.cast.slice(0,10).map((actor: Actor) => (
               <div  key={actor.id} className="flex items-center gap-6 w-full rounded-2xl bg-gray-900 p-4">
-                <img src="https://github.com/shadcn.png" alt="" className="rounded-full size-16 md:size-17 lg:size-17 object-cover"/>
+                <img src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`} alt="" className="rounded-full size-16 md:size-17 lg:size-17 object-cover"/>
                 <div id="name-actor" className="flex flex-col">
                   <h1 className="text-md md:text-lg lg:text-lg font-semibold">{actor.name}</h1>
                   <h3 className="text-sm md:text-md lg:text-md font-normal">{actor.known_for_department}</h3>
