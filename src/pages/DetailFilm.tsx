@@ -7,6 +7,7 @@ import type { Genres } from "@/types/Genres";
 import type { Actor } from "@/types/Actor";
 import type { Production } from "@/types/Production";
 import { useDetailFilm } from "@/hooks/useFetchDetail";
+import DetailFilmSkeleton from "@/Skeleton/DetailFilmSkeleton";
 
 
 const DetailFilm = () => {
@@ -19,10 +20,7 @@ const DetailFilm = () => {
   if (!fetchDetail || !creditFetch) {
     return (
       <div>
-        <Navbar />
-        <div className="h-screen w-full flex justify-center items-center">
-          <h1 className="text-3xl font-black">Loading..</h1>
-        </div>
+        < DetailFilmSkeleton />
       </div>
     )
   }

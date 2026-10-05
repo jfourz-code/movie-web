@@ -11,7 +11,7 @@ import {
 import { Card, CardTitle } from "@/components/ui/card";
 import { useFetchApi } from "@/api/useFetchApi";
 import { Link } from "react-router";
-import { Skeleton } from "@/components/ui/skeleton";
+import DiscoverSkeleton from "@/Skeleton/DiscoverSkeleton";
 
 const Content = () => {
   const { heroSection, genre, trendingMoviesToday, trendingTvToday } =
@@ -23,82 +23,12 @@ const Content = () => {
     return found?.name;
   });
 
-  // guard content
+  // guard content => skeleton
   if (!heroSection) {
     return (
       <div>
-        <Navbar />
-        {/* section hero start */}
-      <section
-        id="hero"
-        className="relative w-full h-112.5 md:h-167.5 overflow-hidden" 
-      >
-        <Skeleton
-          className="absolute inset-0 w-full h-full object-cover bg-gray-800 rounded-none"
-        />
-
-        {/* star and data film */}
-        <div className="absolute flex flex-col gap-3 top-65 md:top-60 left-5 md:left-8">
-          <div id="star-and-date-film" className="flex gap-3 items-center">
-            {/* star for mobile start */}
-            <Skeleton
-              id="star"
-              className="md:hidden flex gap-1 items-center bg-gray-600"
-            >
-            </Skeleton>
-            {/* star for mobile end */}
-
-            {/* star for mobile start */}
-            <Skeleton id="datefilm" className="md:hidden text-sm bg-gray-500">
-            </Skeleton>
-          </div>
-          {/* star for mobile end */}
-
-          {/* title film for mobile and dekstop start */}
-          <div id="title-film">
-            <Skeleton className="text-2xl md:text-5xl font-black bg-gray-500 w-2xl h-12 ">
-            </Skeleton>
-          </div>
-          {/* title film for mobile and dekstop end */}
-
-          {/* star for dekstop start */}
-          <div className="hidden md:flex items-center gap-2">
-            {/* badge star */}
-            <Skeleton className="font-black bg-gray-500">
-            </Skeleton>
-
-            {/* badge year */}
-            <Skeleton className="bg-gray-700 font-bold rounded-sm">
-            </Skeleton>
-
-            <div id="genre" className="flex gap-1">
-              <Skeleton className="text-sm text-blue-200 bg-gray-500">
-              </Skeleton>
-              <Skeleton className="text-sm text-blue-200 bg-gray-500">
-              </Skeleton>
-            </div>
-          </div>
-          {/* star for dekstop end */}
-
-          {/* description film */}
-          <div id="description-film">
-            <Skeleton className="line-clamp-1 md:line-clamp-3 leading-relaxed text-sm font-light max-w-xl w-88 h-6 md:max-w-2xl md:w-2xl md:h-17 bg-gray-500 ">
-            </Skeleton>
-          </div>
-
-          {/* button watch and list */}
-          <div id="button" className="flex gap-3 items-center">
-              <Skeleton className="pt-4 pb-4 pl-3 pr-3 text-background rounded-md font-semibold bg-gray-500 w-24 h-9">
-                
-              </Skeleton>
-            {/* <Badge className="pt-4 pb-4 pl-3 pr-3 bg-hover/50 rounded-md font-semibold">
-              <Bookmark />
-              List
-            </Badge> */}
-          </div>
-        </div>
-      </section>
-      {/* section hero end */}
+        {/* skeleton */}
+        < DiscoverSkeleton />
       </div>
     )
   }
@@ -311,8 +241,8 @@ const Content = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselNext className="right-0 -top-49 md:-top-30 bottom-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
-            <CarouselPrevious className="left-0 -top-49 md:-top-30 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+            <CarouselNext className="right-0 -top-25 md:-top-30 bottom-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
+            <CarouselPrevious className="left-0 -top-25 md:-top-30 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
           </Carousel>
         </div>
       </section>
