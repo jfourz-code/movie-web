@@ -6,7 +6,7 @@ import type { HeroSectionResponse } from "@/types/HeroSectionResponse";
 import type { Genres } from "@/types/Genres";
 
 export const useFetchApi = () => {
-  const [movies, setMovies] = useState<TrendingResponse[]>([]);
+  // const [movies, setMovies] = useState<TrendingResponse[]>([]);
   const [heroSection, setHeroSection] = useState<HeroSectionResponse | null>(null);
   const [genre, setGenre] = useState<Genres[]>([]);
   const [trendingMoviesToday, setTrendingMoviesToday] = useState<
@@ -17,13 +17,13 @@ export const useFetchApi = () => {
   );
 
   // fetch api movie discover
-  useEffect(() => {
-    const fetchApi = async () => {
-      const response = await axiosInstance.get("/discover/movie");
-      setMovies(response.data.results);
-    };
-    fetchApi();
-  }, []);
+  // useEffect(() => {
+  //   const fetchApi = async () => {
+  //     const response = await axiosInstance.get("/discover/movie?&page=1");
+  //     setMovies(response.data.results);
+  //   };
+  //   fetchApi();
+  // }, []);
 
   // fetch api trending movie for hero section
   useEffect(() => {
@@ -40,7 +40,7 @@ export const useFetchApi = () => {
   // fetch api for genre
   useEffect(() => {
     const genres = async () => {
-      const response = await axiosInstance.get("/genre/movie/list");
+      const response = await axiosInstance.get("/genre/movie/list?language=en");
       setGenre(response.data.genres);
     };
     genres();
@@ -49,7 +49,7 @@ export const useFetchApi = () => {
   // fetch api for trending movie today
   useEffect(() => {
     const trendingMovieToday = async () => {
-      const response = await axiosInstance.get("/trending/movie/day");
+      const response = await axiosInstance.get("/trending/movie/day?language=en-US");
       setTrendingMoviesToday(response.data.results);
     };
     trendingMovieToday();
@@ -58,14 +58,13 @@ export const useFetchApi = () => {
   // fetch api for trending tv today
   useEffect(() => {
     const trendingTvday = async () => {
-      const response = await axiosInstance.get("/trending/tv/day");
+      const response = await axiosInstance.get("/trending/tv/day?language=en-US");
       setTrendingTvToday(response.data.results);
     };
     trendingTvday();
   }, []);
 
   return {
-    movies,
     heroSection,
     genre,
     trendingMoviesToday,

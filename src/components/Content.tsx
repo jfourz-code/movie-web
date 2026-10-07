@@ -12,6 +12,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { useFetchApi } from "@/api/useFetchApi";
 import { Link } from "react-router";
 import DiscoverSkeleton from "@/Skeleton/DiscoverSkeleton";
+import Footer from "./Footer";
 
 const Content = () => {
   const { heroSection, genre, trendingMoviesToday, trendingTvToday } =
@@ -171,7 +172,7 @@ const Content = () => {
                       />
                     </Card>
                     <div id="title-film" className="ml-3 text-md mt-3">
-                      <h1 className="font-bold">{data.title}</h1>
+                      <h1 className="font-bold line-clamp-1">{data.title}</h1>
                       <p className="font-extralight text-sm">
                         {data.release_date.substring(0, 4)}
                         <span className="capitalize">
@@ -185,8 +186,8 @@ const Content = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselNext className="right-0 -top-20 md:-top-15 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
-            <CarouselPrevious className="left-0 -top-20 md:-top-15  bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+            <CarouselNext className="right-0 -top-15 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+            <CarouselPrevious className="left-0 -top-15 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
           </Carousel>
         </div>
       </section>
@@ -227,7 +228,7 @@ const Content = () => {
                       />
                     </Card>
                     <div id="title-film" className="ml-3 text-md mt-3">
-                      <h1 className="font-bold">{data.name}</h1>
+                      <h1 className="font-bold line-clamp-1">{data.name}</h1>
                       <p className="font-extralight text-sm">
                         {data.first_air_date.substring(0, 4)}
                         <span className="capitalize">
@@ -241,12 +242,16 @@ const Content = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselNext className="right-0 -top-25 md:-top-30 bottom-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
-            <CarouselPrevious className="left-0 -top-25 md:-top-30 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
+            <CarouselNext className="right-0 -top-15 bottom-0 rounded-md size-15  border-none bg-transparent hover:bg-background" />
+            <CarouselPrevious className="left-0 -top-15 bottom-0 rounded-md size-15 border-none bg-transparent hover:bg-background" />
           </Carousel>
         </div>
       </section>
       {/* section carousel tv end (trending today) */}
+
+      {/* footer start */}
+      < Footer />
+      {/* footer end */}
     </div>
   );
 };

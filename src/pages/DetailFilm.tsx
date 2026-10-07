@@ -8,7 +8,7 @@ import type { Actor } from "@/types/Actor";
 import type { Production } from "@/types/Production";
 import { useDetailFilm } from "@/hooks/useFetchDetail";
 import DetailFilmSkeleton from "@/Skeleton/DetailFilmSkeleton";
-
+import Footer from "@/components/Footer";
 
 const DetailFilm = () => {
 
@@ -153,6 +153,9 @@ const DetailFilm = () => {
   </section>
   {/* section mobile & desktop end */}
 
+    {/* footer start */}
+    < Footer />
+    {/* footer end */}
   </div>
   );
 };

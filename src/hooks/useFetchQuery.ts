@@ -12,7 +12,7 @@ export const useFetchQuery = (query: string | null) => {
         }
 
         const timer = setTimeout(async () => {
-            const response = await axiosInstance.get(`/search/multi?query=${query}`);
+            const response = await axiosInstance.get(`/search/multi?query=${query}&language=en-US&page=1`);
             const filtered = response.data.results.filter((data: SearchingQuery) => data.media_type !== "person" && data.poster_path !== null);
             setResult(filtered);
         }, 200);

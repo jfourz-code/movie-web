@@ -6,6 +6,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { useFetchQuery } from "@/hooks/useFetchQuery";
 import { Link } from "react-router";
 import type { TrendingResponse } from "@/types/TrendingResponse";
+import Footer from "@/components/Footer";
 
 const ResultSearching = () => {
     const [searchParams] = useSearchParams();
@@ -65,6 +66,10 @@ const ResultSearching = () => {
                 </Link>
             ))}
         </div>
+
+        {/* footer start */}
+        < Footer />
+        {/* footer end */}
         </div>
     )
 }
