@@ -1,10 +1,5 @@
 import Navbar from "@/components/Navbar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { StarIcon, Eye} from "lucide-react";
-import type { Genres } from "@/types/Genres";
-import type { Actor } from "@/types/Actor";
-import type { Production } from "@/types/Production";
 
 
 

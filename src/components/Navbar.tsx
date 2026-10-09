@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/input-group";
 import { useState } from "react";
 import SearchOverlay from "./SearchOverlay";
-import { useFetchQuery } from "@/hooks/useFetchQuery";
+import { useFetchFilm} from "@/hooks/useFetchQuery";
 import type { SearchingQuery } from "@/types/SearchingQuery";
 
 // import {
@@ -25,11 +25,9 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const { result } =  useFetchQuery(searchQuery);
+  const { result } =  useFetchFilm(searchQuery);
 
   const navigate = useNavigate();
-
-
 
   return (
     <>
@@ -171,11 +169,11 @@ const Navbar = () => {
             </InputGroupAddon>
           </InputGroup>
 
-            {result.length !== 0 && 
+            {result.length > 0 && 
             <div className="absolute z-100 w-64 bg-gray-700 mt-16 rounded-sm shadow-2xl p-5 max-h-100 overflow-auto scrollbar-thin scrollbar-thumb-current scroll-smooth">
               <div className="flex flex-col gap-5">
                   {result.slice(0,10).map((result: SearchingQuery) => (
-                  <Link to={`/discover/${result.media_type}/${result.id}`}>
+                  <Link to={`/discover/${result.media_type}/${result.id}`} key={result.id}>
                     <div className="flex gap-3 items-center"> 
                     <img src={`https://image.tmdb.org/t/p/original/${result.poster_path}`} className="object-cover w-12"  alt="" />
                     <div className="flex flex-col">

@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import { Badge } from "@/components/ui/badge";
-import { StarIcon, Play, Bookmark, Info } from "lucide-react";
+import { StarIcon, Info } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -9,23 +9,30 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import { Card, CardTitle } from "@/components/ui/card";
-import { useFetchApi } from "@/api/useFetchApi";
+import { useFetchApi } from "@/hooks/useFetchApi";
 import { Link } from "react-router";
 import DiscoverSkeleton from "@/Skeleton/DiscoverSkeleton";
 import Footer from "./Footer";
 
 const Content = () => {
-  const { heroSection, genre, trendingMoviesToday, trendingTvToday } =
-    useFetchApi();
+  const { 
+    heroSection,
+    genre, 
+    trendingMoviesToday, 
+    trendingTvToday,
+    isPending
+    } = useFetchApi();
 
   // for found name genre
   const genresId = heroSection?.genre_ids.map((id) => {
-    const found = genre.find((item) => item.id === id);
+    const found = genre?.find((item) => item.id === id);
     return found?.name;
   });
 
+
+
   // guard content => skeleton
-  if (!heroSection) {
+  if (isPending) {
     return (
       <div>
         {/* skeleton */}
@@ -46,7 +53,7 @@ const Content = () => {
         className="relative w-full h-112.5 md:h-167.5 overflow-hidden"
       >
         <img
-          src={`https://image.tmdb.org/t/p/original${heroSection.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/original${heroSection?.backdrop_path}`}
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -66,13 +73,13 @@ const Content = () => {
               className="md:hidden flex gap-1 items-center text-yellow-500"
             >
               <StarIcon className="size-5" />{" "}
-              {heroSection.vote_average.toFixed(1)}
+              {heroSection?.vote_average?.toFixed(1)}
             </h1>
             {/* star for mobile end */}
 
             {/* star for mobile start */}
             <h1 id="datefilm" className="md:hidden text-sm">
-              {heroSection.release_date}
+              {heroSection?.release_date}
             </h1>
           </div>
           {/* star for mobile end */}
@@ -80,7 +87,7 @@ const Content = () => {
           {/* title film for mobile and dekstop start */}
           <div id="title-film">
             <h1 className="text-2xl md:text-5xl font-black">
-              {heroSection.title}
+              {heroSection?.title}
             </h1>
           </div>
           {/* title film for mobile and dekstop end */}
@@ -90,13 +97,13 @@ const Content = () => {
             {/* badge star */}
             <Badge className="bg-background/95 font-black">
               <StarIcon className="text-yellow-500" />{" "}
-              {heroSection.vote_average.toFixed(1)}{" "}
+              {heroSection?.vote_average?.toFixed(1)}{" "}
               <span className="font-medium text-hover/90">/10</span>
             </Badge>
 
             {/* badge year */}
             <Badge className="bg-background/95 font-bold rounded-sm">
-              {heroSection.release_date}
+              {heroSection?.release_date}
             </Badge>
 
             <div id="genre" className="flex gap-1">
@@ -115,13 +122,13 @@ const Content = () => {
           {/* description film */}
           <div id="description-film">
             <p className="line-clamp-1 md:line-clamp-3 leading-relaxed text-sm font-light max-w-xl  md:max-w-2xl">
-              {heroSection.overview}
+              {heroSection?.overview}
             </p>
           </div>
 
           {/* button watch and list */}
           <div id="button" className="flex gap-3 items-center">
-            <Link to={`/discover/${heroSection.media_type}/${heroSection.id}`}>
+            <Link to={`/discover/${heroSection?.media_type}/${heroSection?.id}`}>
               <Badge className="pt-4 pb-4 pl-3 pr-3 bg-blue-500 text-background rounded-md font-semibold">
                 <Info />
                 See More
@@ -152,7 +159,7 @@ const Content = () => {
             className="w-full max-w-8xl mx-auto"
           >
             <CarouselContent className="-ml-1">
-              {trendingMoviesToday.map((data) => (
+              {trendingMoviesToday?.map((data) => (
                 <CarouselItem
                   key={data.id}
                   className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
@@ -208,7 +215,7 @@ const Content = () => {
             className="w-full max-w-8xl mx-auto"
           >
             <CarouselContent className="-ml-1">
-              {trendingTvToday.map((data) => (
+              {trendingTvToday?.map((data) => (
                 <CarouselItem
                   key={data.id}
                   className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"

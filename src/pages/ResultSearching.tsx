@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { StarIcon, Search } from "lucide-react";
 import { Card, CardTitle } from "@/components/ui/card";
-import { useFetchQuery } from "@/hooks/useFetchQuery";
+import { useFetchFilm } from "@/hooks/useFetchQuery";
 import { Link } from "react-router";
 import type { TrendingResponse } from "@/types/TrendingResponse";
 import Footer from "@/components/Footer";
@@ -13,7 +13,8 @@ const ResultSearching = () => {
 
     const queryUser = searchParams.get("query");
 
-    const { result } = useFetchQuery(queryUser);
+    const { result } = useFetchFilm(queryUser);
+
 
     if (!queryUser) {
         return (
@@ -38,7 +39,7 @@ const ResultSearching = () => {
 
         <div id="list-film-result" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-3">
             {result.map((result: TrendingResponse) => (
-            <Link to={`/discover/${result.media_type}/${result.id}`}>
+            <Link to={`/discover/${result.media_type}/${result.id}`} key={result.id}>
                 <div className="p-1" key={result.id}>
                     <Card className="overflow-hidden p-0">
                     <CardTitle className="absolute flex gap-2 ml-3 mt-3">

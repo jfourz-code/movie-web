@@ -1,25 +1,15 @@
-import { axiosInstance } from "@/lib/axios";
-import type { SearchingQuery } from "@/types/SearchingQuery";
-import { useEffect, useState } from "react"
+import { useFetchQuery } from "@/api/debounce";
+import { fetchQuery } from "@/api/fetchQuery";
+import { useQuery } from "@tanstack/react-query";
 
-export const useFetchQuery = (query: string | null) => {
-    const [ result, setResult ] =  useState([]);
+export const useFetchFilm = (query: string | null) => {
+    const debounce =  useFetchQuery(query)
 
-    useEffect(() => {
-        if (!query) {
-            setResult([]);
-            return
-        }
+    const searchQuery = useQuery({
+        queryKey: ["search", debounce],
+        queryFn: () => fetchQuery(debounce),
+        enabled: debounce.trim().length > 0
+    })    
 
-        const timer = setTimeout(async () => {
-            const response = await axiosInstance.get(`/search/multi?query=${query}&language=en-US&page=1`);
-            const filtered = response.data.results.filter((data: SearchingQuery) => data.media_type !== "person" && data.poster_path !== null);
-            setResult(filtered);
-        }, 200);
-
-        return () => clearTimeout(timer);
-
-    }, [query])
-
-    return { result };
+    return { result: searchQuery.data ?? [] }
 }
