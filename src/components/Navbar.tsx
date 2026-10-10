@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import { Menu } from "lucide-react";
-import { NavLink, Link, useNavigate} from "react-router";
+import { Link, useNavigate} from "react-router";
 import {
   InputGroup,
   InputGroupInput,
@@ -33,11 +33,13 @@ const Navbar = () => {
     <>
       {/* // mobile navbar */}
       <nav className="flex  justify-between items-center p-5 bg-background shadow-md md:hidden">
-        <div id="title">
-          <h1 className="text-lg font-bold">
-            Cine<span className="text-click">Scope</span>
+        <Link to={"/discover"}>
+          <div id="title">
+            <h1 className="text-lg font-bold">
+              Cine<span className="text-click">Scope</span>
           </h1>
         </div>
+        </Link>
         <div id="navbar">
           <Button
             variant="ghost"
@@ -109,11 +111,13 @@ const Navbar = () => {
 
       {/* desktop navbar */}
       <nav className="hidden md:flex justify-between items-center p-5 shadow-md bg-background">
-        <div id="title">
-          <h1 className="text-xl font-bold">
-            Cine<span className="text-click">Scope</span>
-          </h1>
-        </div>
+        <Link to={"/discover"}>
+          <div id="title">
+            <h1 className="text-xl font-bold">
+              Cine<span className="text-click">Scope</span>
+            </h1>
+          </div>
+        </Link>
 
         {/* <div id="navlink" className="flex gap-5 cursor-pointer">
           <NavLink
@@ -158,9 +162,11 @@ const Navbar = () => {
                 setSearchQuery(e.target.value);
               }}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && searchQuery.trim() !== "") {
                   navigate(`/search?query=${searchQuery}`)
                   setSearchQuery("");
+                } else if (e.key === "Enter" && searchQuery.trim() === "") {
+                  e.preventDefault();
                 }
               }}
             ></InputGroupInput>

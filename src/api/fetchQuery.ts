@@ -9,6 +9,7 @@ export const fetchQuery = async (query: string | null) => {
     page: 1,
     },
         });
-    const filter = response.data.results.filter((data: SearchingQuery) => data.media_type !=="person" && data.poster_path !== null);
+    const filter = response.data.results.filter((data: SearchingQuery) => data.media_type !=="person");
+
     return filter;
 }

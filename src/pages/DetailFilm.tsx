@@ -8,6 +8,7 @@ import type { Production } from "@/types/Production";
 import { useDetailFilm } from "@/hooks/useFetchDetail";
 import DetailFilmSkeleton from "@/Skeleton/DetailFilmSkeleton";
 import Footer from "@/components/Footer";
+import { UserRound } from "lucide-react";
 
 const DetailFilm = () => {
 
@@ -91,7 +92,7 @@ const DetailFilm = () => {
         <span>|</span>
 
         <div>
-          {media_type === "movie"? <h1 className="text-md md:text-xl lg:text-xl font-medium">{hours}h{minute}m</h1> : <h1 className="text-md md:text-xl lg:text-xl  font-medium">{fetchDetail.data?.number_of_episodes} Episode</h1>}
+          {media_type === "movie"? <h1 className="text-md md:text-xl lg:text-xl font-medium">{hours}h{minute}m</h1> : <h1 className="text-md md:text-xl lg:text-xl  font-medium">{fetchDetail.data?.number_of_episodes} Eps</h1>}
         </div>
       </div>
     </div>
@@ -128,7 +129,12 @@ const DetailFilm = () => {
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 ">
             {creditFetch.data?.cast.slice(0,10).map((actor: Actor) => (
               <div  key={actor.id} className="flex items-center gap-6 w-full rounded-2xl bg-gray-900 p-4">
-                <img src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`} alt="" className="rounded-full size-16 md:size-17 lg:size-17 object-cover"/>
+                {(actor.profile_path !== null) ? (
+                  <img src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`} alt="" className="rounded-full size-16 md:size-17 lg:size-17 object-cover"/>
+                ) : (
+                  <UserRound strokeWidth={0.4} className="rounded-full size-16 md:size-17 lg:size-17 object-cover"/>
+                )}
+                
                 <div id="name-actor" className="flex flex-col">
                   <h1 className="text-md md:text-lg lg:text-lg font-semibold">{actor.name}</h1>
                   <h3 className="text-sm md:text-md lg:text-md font-normal">{actor.known_for_department}</h3>

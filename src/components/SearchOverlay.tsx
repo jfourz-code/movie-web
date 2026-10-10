@@ -51,10 +51,12 @@ const SearchOverlay = ({
                     value={searchQuery}
                     onChange={(e) => onSearchChange(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter") {
+                      if (e.key === "Enter" && searchQuery.trim() !== "") {
                         navigate(`/search?query=${searchQuery}`)
                         isClose()
                         setSearchQuery()
+                      } else if (e.key === "Enter" && searchQuery.trim() === "") {
+                        e.preventDefault();
                       }
                     }}
                   />

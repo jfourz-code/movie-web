@@ -11,5 +11,7 @@ export const useFetchFilm = (query: string | null) => {
         enabled: debounce.trim().length > 0
     })    
 
-    return { result: searchQuery.data ?? [] }
+    return { result: searchQuery.data ?? [],
+            loading: searchQuery.isPending,
+            }
 }
