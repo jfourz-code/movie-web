@@ -6,7 +6,7 @@ import {
   InputGroupInput,
   InputGroupAddon,
 } from "@/components/ui/input-group";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchOverlay from "./SearchOverlay";
 import { useFetchFilm} from "@/hooks/useFetchQuery";
 import type { SearchingQuery } from "@/types/SearchingQuery";
