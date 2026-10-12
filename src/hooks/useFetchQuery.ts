@@ -8,7 +8,7 @@ export const useFetchFilm = (query: string | null) => {
     const searchQuery = useQuery({
         queryKey: ["search", debounce],
         queryFn: () => fetchQuery(debounce),
-        enabled: debounce.trim().length > 0
+        enabled: debounce.trim().length > 0,
     })    
 
     return { result: searchQuery.data ?? [],

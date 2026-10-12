@@ -1,7 +1,6 @@
-import Navbar from "@/components/Navbar";
 import { useParams } from "react-router";
 import { Badge } from "@/components/ui/badge";
-import { StarIcon, Eye } from "lucide-react";
+import { StarIcon, Eye, Dice1 } from "lucide-react";
 import type { Genres } from "@/types/Genres";
 import type { Actor } from "@/types/Actor";
 import type { Production } from "@/types/Production";
@@ -9,6 +8,7 @@ import { useDetailFilm } from "@/hooks/useFetchDetail";
 import DetailFilmSkeleton from "@/Skeleton/DetailFilmSkeleton";
 import Footer from "@/components/Footer";
 import { UserRound } from "lucide-react";
+import ErrorAlert from "@/components/ErrorAlert";
 
 const DetailFilm = () => {
 
@@ -25,20 +25,25 @@ const DetailFilm = () => {
     )
   }
 
+  if (fetchDetail.isError || creditFetch.isError) {
+    return (
+      <div>
+        < ErrorAlert isError={fetchDetail.isError || creditFetch.isError} />
+        < DetailFilmSkeleton />
+      </div>
+    )
+  }
+
   // duration films start
   const runtime = fetchDetail.data?.runtime ?? 0;
 
   const hours =  Math.floor(runtime / 60);
   const minute = runtime % 60;
   // duration film end
-  
+
 
   return ( 
     <div>
-  {/* navbar start */}
-    < Navbar />
-  {/* navbar end */}
-
 
   {/* hero section start */}
   <section id="hero" className="relative w-full h-112.5 md:h-167.5 overflow-hidden">

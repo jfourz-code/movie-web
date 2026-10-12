@@ -1,6 +1,5 @@
-import Navbar from "./Navbar";
 import { Badge } from "@/components/ui/badge";
-import { StarIcon, Info } from "lucide-react";
+import { StarIcon, Info} from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -13,6 +12,7 @@ import { useFetchApi } from "@/hooks/useFetchApi";
 import { Link } from "react-router";
 import DiscoverSkeleton from "@/Skeleton/DiscoverSkeleton";
 import Footer from "./Footer";
+import ErrorAlert from "@/components/ErrorAlert";
 
 const Content = () => {
   const { 
@@ -20,7 +20,8 @@ const Content = () => {
     genre, 
     trendingMoviesToday, 
     trendingTvToday,
-    isPending
+    isPending,
+    isError
     } = useFetchApi();
 
   // for found name genre
@@ -29,7 +30,9 @@ const Content = () => {
     return found?.name;
   });
 
-
+  // filter movie & tv rating 0
+  const trendingMovie = trendingMoviesToday?.filter((data) => data.vote_average !== 0);
+  const trendingTv = trendingTvToday?.filter((data) => data.vote_average !== 0);
 
   // guard content => skeleton
   if (isPending) {
@@ -41,11 +44,19 @@ const Content = () => {
     )
   }
 
+
+  if (isError) {
+    return (
+      <div>
+        <ErrorAlert isError={isError} />
+        <DiscoverSkeleton/>
+      </div>
+    )
+  }
+
+
   return (
     <div className="relative h-screen">
-      {/* navbar */}
-      <Navbar />
-      {/* content */}
 
       {/* section hero start */}
       <section
@@ -159,7 +170,7 @@ const Content = () => {
             className="w-full max-w-8xl mx-auto"
           >
             <CarouselContent className="-ml-1">
-              {trendingMoviesToday?.map((data) => (
+              {trendingMovie?.map((data) => (
                 <CarouselItem
                   key={data.id}
                   className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
@@ -215,7 +226,7 @@ const Content = () => {
             className="w-full max-w-8xl mx-auto"
           >
             <CarouselContent className="-ml-1">
-              {trendingTvToday?.map((data) => (
+              {trendingTv?.map((data) => (
                 <CarouselItem
                   key={data.id}
                   className="pl-1 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/5"

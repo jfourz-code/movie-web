@@ -1,4 +1,3 @@
-import Navbar from "../components/Navbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Carousel,
@@ -9,14 +8,13 @@ import {
 const DiscoverSkeleton = () => {
     return (
         <div>
-        <Navbar />
         {/* section hero start */}
         <section
         id="hero"
         className="relative w-full h-112.5 md:h-167.5 overflow-hidden" 
         >
         <Skeleton
-            className="absolute inset-0 w-full h-full object-cover bg-background rounded-none"
+            className="absolute inset-0 w-full h-full bg-background rounded-none"
         />
 
         {/* star and data film */}
@@ -38,7 +36,7 @@ const DiscoverSkeleton = () => {
 
             {/* title film for mobile and dekstop start */}
             <div id="title-film">
-            <Skeleton className="text-2xl md:text-5xl font-black bg-gray-500 w-2xl h-12 ">
+            <Skeleton className="max-w-90 md:max-w-200 lg:max-w-250 bg-gray-500 w-2xl h-12 ">
             </Skeleton>
             </div>
             {/* title film for mobile and dekstop end */}

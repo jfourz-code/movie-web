@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import { useSearchParams } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { StarIcon, Search} from "lucide-react";
@@ -20,7 +19,6 @@ const ResultSearching = () => {
     if (loading) {
         return (
             <div>
-                < Navbar />
                 <div id="result-searching" className="flex flex-col mt-7 gap-2 md:gap-3 lg:gap-4 p-6">
                     <h1 className="text-md  md:text-lg  lg:text-2xl font-bold">{`Search Results for "${queryUser}"`}</h1>
                     <h3 className="text-sm  md:text-md  lg:text-xl font-semibold">{result.length} results found</h3>
@@ -35,7 +33,6 @@ const ResultSearching = () => {
     if (result.length <= 0) {
         return (
             <div>
-                < Navbar />
                 <div id="result-searching" className="flex flex-col mt-7 gap-2 md:gap-3 lg:gap-4 p-6">
                     <h1 className="text-md  md:text-lg  lg:text-2xl font-bold">{`Search Results for "${queryUser}"`}</h1>
                     <h3 className="text-sm  md:text-md  lg:text-xl font-semibold">{result.length} results found</h3>
@@ -50,7 +47,6 @@ const ResultSearching = () => {
 
     return (
         <div>
-        < Navbar />
 
         <div id="result-searching" className="flex flex-col mt-7 gap-2 md:gap-3 lg:gap-4 p-6">
             <h1 className="text-md  md:text-lg  lg:text-2xl font-bold">{`Search Results for "${queryUser}"`}</h1>

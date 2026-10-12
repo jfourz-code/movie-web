@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/input-group";
 import type { SearchOverlayProps } from "@/types/SearchOverlayProps";
 import { Link, useNavigate } from "react-router";
+import { useEffect } from "react";
 
 const SearchOverlay = ({
   isOpen,
@@ -20,6 +21,20 @@ const SearchOverlay = ({
 }: SearchOverlayProps) => {
 
   const navigate = useNavigate();
+
+  // make while search overlay open , the back set fixed (start)
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    }
+  }, [isOpen])
+
+  if (!isOpen) return null;
+  // (end)
 
   return (
     <AnimatePresence>

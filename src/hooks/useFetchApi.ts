@@ -8,7 +8,7 @@ export const useFetchApi = () => {
   // fetch api trending movie for hero section
   const heroSectionQuery = useQuery<HeroSectionResponse | null>({
     queryKey: ["hero-section"],
-    queryFn: getFetchHeroSection
+    queryFn: getFetchHeroSection,
   })
 
   // fetch api for genre
@@ -20,13 +20,13 @@ export const useFetchApi = () => {
   // fetch api for trending movie today
   const trendingMoviesTodayQuery = useQuery<TrendingResponse[]>({
     queryKey: ["trending-movie-day"],
-    queryFn: getTrendingMovieToday
+    queryFn: getTrendingMovieToday,
   })
 
   // fetch api for trending tv today
   const trendingTvTodayQuery = useQuery<TrendingResponse[]>({
     queryKey: ["trending-tv-day"],
-    queryFn: getTrendingTvToday
+    queryFn: getTrendingTvToday,
   })
 
   return {
@@ -35,6 +35,7 @@ export const useFetchApi = () => {
     trendingMoviesToday : trendingMoviesTodayQuery.data,
     trendingTvToday : trendingTvTodayQuery.data,
 
-    isPending: heroSectionQuery.isPending || genreQuery.isPending || trendingMoviesTodayQuery.isPending || trendingTvTodayQuery.isPending 
+    isPending: heroSectionQuery.isPending || genreQuery.isPending || trendingMoviesTodayQuery.isPending || trendingTvTodayQuery.isPending,
+    isError: heroSectionQuery.isError || genreQuery.isError || trendingMoviesTodayQuery.isError || trendingTvTodayQuery.isError
   };
 };

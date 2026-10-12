@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
-import { Menu } from "lucide-react";
 import { Link, useNavigate} from "react-router";
 import {
   InputGroup,
   InputGroupInput,
   InputGroupAddon,
 } from "@/components/ui/input-group";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchOverlay from "./SearchOverlay";
 import { useFetchFilm} from "@/hooks/useFetchQuery";
 import type { SearchingQuery } from "@/types/SearchingQuery";
@@ -32,7 +31,7 @@ const Navbar = () => {
   return (
     <>
       {/* // mobile navbar */}
-      <nav className="flex  justify-between items-center p-5 bg-background shadow-md md:hidden">
+      <nav className="flex justify-between items-center p-5 bg-background shadow-md md:hidden">
         <Link to={"/discover"}>
           <div id="title">
             <h1 className="text-lg font-bold">

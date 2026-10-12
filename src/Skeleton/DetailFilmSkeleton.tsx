@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import { Skeleton } from "@/components/ui/skeleton";
 
 
@@ -6,7 +5,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 const DetailFilmSkeleton = () => {
     return (
         <div>
-            <Navbar/>
 
             {/* hero section start */}
             <section id="hero" className="relative w-full h-112.5 md:h-167.5 overflow-hidden">
